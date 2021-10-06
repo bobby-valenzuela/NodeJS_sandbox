@@ -1,0 +1,8 @@
+{
+    "name": "joe",
+    "age" : 21,
+    "pets": {
+        "dogs" : false,
+        "cats" : true
+    }
+}
