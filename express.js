@@ -55,6 +55,9 @@ app.get( '/' , ( req, res, next ) => {
     console.log("Method: ", req.method);
     console.log("Params: ", req.query);             // local/param1/param1/
     console.log("Query String: ", req.query);      // local/param1/param1/?query1=yes&query2=no -> {query1 : 'yes', query2 : 'no' }
+    console.log("Req Params: ", req.params);       // similar to req.query but used for matched routed -> https://stackoverflow.com/questions/18524125/req-query-and-req-param-in-expressjs
+    console.log("Req Body: ", req.body);            // Available on some requests only, like POST for example 
+
     const { name = 'stranger'} = req.query;
     
     // RESPONSE : res - Object allowing us to respond 
@@ -63,7 +66,7 @@ app.get( '/' , ( req, res, next ) => {
     // res.send() seems to end script execution as well
 
     // Reponse with HTML file
-    res.sendFile(`./index.html`, { root: __dirname } ); // Respond with html file - text/html
+    // res.sendFile(`./index.html`, { root: __dirname } ); // Respond with html file - text/html
     
 } );
 
@@ -87,7 +90,7 @@ app.get( '/cats/:size' , ( req, res, next ) => {
 app.get( '/cats/:size/:color' , ( req, res, next ) => {
     // Matches paths with '/cats/Large/Black/'
     // Does not match paths with '/cats/Black/'
-    const { size, color } = req.params; // equiv. to req.params.size / req.params.color
+    const { size, color } = req.params; // equiv. to req.params.size in this case / req.params.color
     res.send(`<h1>You are in the ${size} Cats dir! ${color} choosen! Age : ${req.query.age}</h1>`); // Respond with string - text/html - http://localhost:3000/cats/Large/black/?age=10
 } );
 
@@ -142,3 +145,35 @@ app.use((req, res, next)=> {
 ///// Serving Static Assets
 // app.use() is also used to serve static assets
 app.use( express.static('assets') );    // Can bse used more than once - based off the num of folders containing static assets you which to serve
+
+
+
+////////// Parsing request data
+// place the bleow on top of the script so we can parse every response
+app.use(express.json());                            // Parsing application/json
+app.use(express.urlencoded( {extended: true } ));   // Parsing aaplication/x-www-form-urlencoded
+
+// ^ the above populates  req.body
+app.post('/somesubmission', (req, res, next)=>{
+
+    console.log(req.body);
+    res.json(req.body);
+
+} );
+
+// another example showing the req.body object carries properties all inputs
+app.post('/signup', function (req, res) {
+    var data = req.body;
+    
+    console.log("Name: ", data.name);
+    console.log("Age: ", data.age);
+    console.log("Gender: ", data.gender);
+      
+    res.send();
+  });
+    
+
+
+  ////////////////// NOTEABLES ///////////////////
+  // Method overide pckg - allow all requests from clients that only suppoer GET/POST (browser) - see Colt Steels web dev bootcamp -> middleware app.use
+  // UUID - pckg to get universal unique ID

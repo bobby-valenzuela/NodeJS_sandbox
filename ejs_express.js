@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');  // With this line of native node code, you don't
 // This path ('/views') is relative to where our script is being run - so if you aren't setting a custom path (i.e. if you are using the default setting) make sure you start your server script from the location to which '/views' serves as the appropriate path
 
 
-///// Set the 'views' folder location - Option 2 - Custom Location (Absolute)
+///// Set the 'views' folder location - Option 2 - Custom Location (Absolute) -> PREFERRED
 //this way makes sure we can execute this script from any directory, and the 'view's location will be referenced correctly
 // basically we're making the path absolute - not relative to where we run the script
 
@@ -70,7 +70,7 @@ app.use( express.static('assets') );
 // <% 'Scriptlet' tag, for control-flow, no output
 // <%_ ‘Whitespace Slurping’ Scriptlet tag, strips all whitespace before it
 // <%= Outputs the value into the template (HTML escaped)
-// <%- Outputs the unescaped value into the template
+// <%- Outputs the unescaped value into the template (Serves HTML as HTML)
 // <%# Comment tag, no execution, no output
 // <%% Outputs a literal '<%'
 // %> Plain ending tag
