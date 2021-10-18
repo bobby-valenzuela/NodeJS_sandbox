@@ -50,12 +50,20 @@ app.get( '/passdata' , ( req, res, next ) => {
 
     const randoNumbo = Math.floor( Math.random() * 10 ) + 1;
     res.render('passdata', { randoNumbo, othernum : 2 }); 
-    // ^ 2nd arg is object containing all the vars you want to pass in to be used in this ejs file
+    // ^ 2nd arg is object (must be object) containing all the vars you want to pass in to be used in this ejs file
 } );
 
 // Serve Static Assets
 app.use( express.static('assets') ); 
 // ^ Note - in our HTML file we don't need to reference 'assets' folder since we are already referencing that here
+
+// 404 page - triggers if no other render() is executed i.e. if no response has been sent
+app.use( (req, res)=> {
+
+    res.status(404).render('404');
+
+} ); 
+
 
 // END
 
@@ -67,9 +75,9 @@ app.use( express.static('assets') );
 
 // Anything within EJS tags will be treated (and thus expressed/executed) as JS
 
-// <% 'Scriptlet' tag, for control-flow, no output
+// <% 'Scriptlet' tag, for control-flow, no output = pure JS
 // <%_ ‘Whitespace Slurping’ Scriptlet tag, strips all whitespace before it
-// <%= Outputs the value into the template (HTML escaped)
+// <%= Outputs the value into the template (HTML escaped) - evals JS expression
 // <%- Outputs the unescaped value into the template (Serves HTML as HTML)
 // <%# Comment tag, no execution, no output
 // <%% Outputs a literal '<%'

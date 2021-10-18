@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;  // In prod, will usually use port 80
+const port = 3000 || process.env.PORT;  // In prod, will usually use port 80
 
 // Start Server / Listen to incoming requests 
 // app.listen(port) causes event loop to keep running since we don't stop listening ( process.exit() would manually stop event loop )
@@ -68,6 +68,9 @@ app.get( '/' , ( req, res, next ) => {
     // Reponse with HTML file
     // res.sendFile(`./index.html`, { root: __dirname } ); // Respond with html file - text/html
     
+    // the next() should only bse used when we aren't sending a response in the current middleware
+    // check out 3rd-party middleware mods to run tasks on data before sending a response
+
 } );
 
 // Cats - Handle GET request
@@ -142,8 +145,8 @@ app.use((req, res, next)=> {
 });
 
 
-///// Serving Static Assets
-// app.use() is also used to serve static assets
+///// Serving Static Assets - express native middleware
+// app.use() is also used to serve static assets - place near top
 app.use( express.static('assets') );    // Can bse used more than once - based off the num of folders containing static assets you which to serve
 
 
