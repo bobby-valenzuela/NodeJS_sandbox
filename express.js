@@ -147,8 +147,11 @@ app.use((req, res, next)=> {
 
 ///// Serving Static Assets - express native middleware
 // app.use() is also used to serve static assets - place near top
+// nodejs protects files from being access directly - we need this middle to define which paths are public
 app.use( express.static('assets') );    // Can bse used more than once - based off the num of folders containing static assets you which to serve
-
+// reference in your html where the forward slash represents the "assests" folder - this is the ROOT of the public folder
+// example: <link rel='stylesheet' href='/styles.css' />
+// where your file is ine assests/styles.css
 
 
 ////////// Parsing request data
