@@ -28,7 +28,7 @@ app.listen( port, ()=>
 // res.status(200).sendFile('./cool.html', { root: __dirname});
 
 
-// NO ROUTING -  app.use - applies to every request
+// NO ROUTING -  app.use - applies to every request - Can be used multiple times [MIDDLEWARE]
 
     // app.use( (req, res, next )=>{
 
